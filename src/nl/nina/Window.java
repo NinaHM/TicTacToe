@@ -1,6 +1,5 @@
 package nl.nina;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -16,7 +15,6 @@ import javax.swing.JTextField;
 public class Window {
 	
 	private JFrame frame;
-	private JTextField textField;
 	private JPanel buttonsPanel; 
 	private JButton[] buttons;
 	private ActionListener[] actionListenerList;
@@ -33,7 +31,6 @@ public class Window {
 	private void initialize() {
 		createFrame();
 		addButtonsPanel();
-		addTextField(); 
 		addButtons();
 		frame.setVisible(true);
 	}
@@ -42,7 +39,7 @@ public class Window {
 	 * Creates JPanel on which the Tic Tac Toe board is displayed.
 	 */
 	private void createFrame() {
-		frame = new JFrame("Boter Kaas en Eieren");
+		frame = new JFrame("Tic Tac Toe");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(400, 400);
 	}
@@ -75,17 +72,6 @@ public class Window {
 			buttonsPanel.add(button);
 			}
 		}
-	
-	/**
-	 * Adds a text field to the bottom of the frame.
-	 */
-	private void addTextField() {
-		textField = new JTextField(); 
-		textField.setPreferredSize(new Dimension(400, 30));
-		textField.setText("Playing game");
-		textField.setEditable(false);
-		frame.add(textField, BorderLayout.PAGE_END);
-	}
 	
 	/**
 	 * Updates the button with a text and removes
