@@ -5,13 +5,6 @@
     -fx-text-fill: red; 
 }
 
-.player1-button{
-    -fx-focus-color: transparent;
-    -fx-background-insets: -1, 0, 1, 1;
-    -fx-font-size: 46;
-    -fx-text-fill: red; 
-}
-
 .player2-button {
     -fx-focus-color: transparent;
     -fx-background-insets: -1, 0, 1, 1;
