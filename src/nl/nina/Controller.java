@@ -113,6 +113,8 @@ public class Controller {
 	private void newGame() {
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i].setText("");
+			buttons[i].setDisable(false);
+			buttons[i].getStyleClass().remove("player2-button");
 		}
 		this.model = new Model();
 	}
@@ -136,7 +138,6 @@ public class Controller {
 		if (clickedMenu.getText().equals("New game")) {
 			newGame();
 		} else if (clickedMenu.getText().equals("Quit")) {
-			System.out.println("exit game");
 			Platform.exit();
 		}
 	}
