@@ -1,15 +1,20 @@
 package nl.nina;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
 
 public class Controller {
 
@@ -17,12 +22,16 @@ public class Controller {
 	private static final String PLAYER_2 = "O";
 	private Button[] buttons;
 	private Model model;
+	
+	private static boolean pvp;
+	private boolean isPlayer1;
 
 	@FXML
 	private Button b0, b1, b2, b3, b4, b5, b6, b7, b8;
 
 	public Controller() {
 		this.model = new Model();
+		isPlayer1 = true;
 	}
 
 	@FXML
@@ -35,14 +44,26 @@ public class Controller {
 	 */
 	public void buttonClickHandler(ActionEvent e) {
 		Button button = (Button) e.getSource();
-		if (button.getText().equals("")) {
+		int cell = findButton(button);
+		boolean gameEnd = false;
+		
+		if(button.getText().equals("") && isPlayer1) {
+			button.getStyleClass().add("player1-button");
 			button.setText(PLAYER_1);
-			int cell = findButton(button);
 			model.registerTurn(cell, PLAYER_1);
-			if (!hasGameEnded(PLAYER_1, cell)) {
+			isPlayer1 = false;
+			gameEnd = hasGameEnded(PLAYER_1, cell);
+			if (!gameEnd && !pvp) {
 				performComputerMove();
+				isPlayer1 = true;
 			}
-		}
+		} else if(button.getText().equals("") && !isPlayer1 && pvp) {
+			button.getStyleClass().add("player2-button");
+			button.setText(PLAYER_2);
+			model.registerTurn(cell, PLAYER_2);
+			isPlayer1 = true;
+			hasGameEnded(PLAYER_2, cell);
+		} 		
 	}
 
 	/**
@@ -71,7 +92,7 @@ public class Controller {
 				endMessage("Player 1 has won the game!");
 				return true;
 			} else if (player == PLAYER_2) {
-				endMessage("Computer has won the game!");
+				endMessage("Player 2 has won the game!");
 				return true;
 			}
 		}
@@ -117,6 +138,7 @@ public class Controller {
 			buttons[i].getStyleClass().remove("player2-button");
 		}
 		this.model = new Model();
+		isPlayer1 = true;
 	}
 
 	/**
@@ -140,5 +162,24 @@ public class Controller {
 		} else if (clickedMenu.getText().equals("Quit")) {
 			Platform.exit();
 		}
+	}
+	
+
+	public void startClickHandler(ActionEvent e) throws IOException {
+		Button button = (Button) e.getSource(); 
+		
+		if(button.getText().equals("Singleplayer")) {
+			pvp = false;
+		} else if (button.getText().equals("Multiplayer")){
+			pvp = true;
+		}
+		
+		Stage stage = (Stage) button.getScene().getWindow();
+		Parent root = FXMLLoader.load(getClass().getResource("Layout.fxml"));
+		Scene scene = stage.getScene();
+		scene.getStylesheets().remove("Start.css");
+		scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+		stage.getScene().setRoot(root);
+		
 	}
 }

@@ -1,0 +1,22 @@
+.label {
+    -fx-focus-color: transparent;
+    -fx-background-insets: -1.0, 0.0, 1.0, 1.0;
+    -fx-font-size: 46.0;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.button{
+    -fx-focus-color: transparent;
+    -fx-background-color: red;
+    -fx-background-radius:0;
+    -fx-border-width: 2;
+   	-fx-border-color: white;
+   	-fx-background-insets: 0;
+    -fx-font-size: 20;
+    -fx-text-fill: white; 
+}
+
+.button:hover{
+	-fx-background-color: black;
+}
