@@ -2,30 +2,24 @@ package nl.nina;
 
 import java.io.IOException;
 import java.util.Optional;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
 public class Controller {
 
 	private static final String PLAYER_1 = "X";
 	private static final String PLAYER_2 = "O";
-	private Button[] buttons;
-	private Model model;
-	
 	private static boolean pvp;
 	private boolean isPlayer1;
+	private Button[] buttons;
+	private Model model;
 
 	@FXML
 	private Button b0, b1, b2, b3, b4, b5, b6, b7, b8;
@@ -48,27 +42,38 @@ public class Controller {
 	public void buttonClickHandler(ActionEvent e) {
 		Button button = (Button) e.getSource();
 		int cell = findButton(button);
-		boolean gameEnd = false;
 		
 		if(button.getText().equals("") && isPlayer1) {
-			button.getStyleClass().add("player1-button");
-			button.setText(PLAYER_1);
-			model.registerTurn(cell, PLAYER_1);
-			isPlayer1 = false;
-			turnLabel.setText("Player 2's turn");
-			gameEnd = hasGameEnded(PLAYER_1, cell);
-			if (!gameEnd && !pvp) {
+			performMove(button, cell, PLAYER_1, "player1-button");
+			if (!hasGameEnded(PLAYER_1, cell) && !pvp) {
 				performComputerMove();
-				isPlayer1 = true;
 			}
 		} else if(button.getText().equals("") && !isPlayer1 && pvp) {
-			button.getStyleClass().add("player2-button");
-			button.setText(PLAYER_2);
-			model.registerTurn(cell, PLAYER_2);
-			isPlayer1 = true;
-			turnLabel.setText("Player 1's turn");
+			performMove(button, cell, PLAYER_2, "player2-button");
 			hasGameEnded(PLAYER_2, cell);
 		} 		
+	}
+	
+	private void performMove(Button button, int cell, String player, String css) {
+		button.getStyleClass().add(css);
+		button.setText(player);
+		model.registerTurn(cell, player);
+		if(isPlayer1) {
+			turnLabel.setText("Player 2's turn");
+			isPlayer1 = false;
+		} else {
+			turnLabel.setText("Player 1's turn");
+			isPlayer1 = true;
+		}
+	}
+	
+	/**
+	 * Performs the necessary actions for the Computer opponent to make a move.
+	 */
+	private void performComputerMove() {
+		int move = model.computerTurn();
+		performMove(buttons[move], move, PLAYER_2, "player2-button");
+		hasGameEnded(PLAYER_2, move);
 	}
 
 	/**
@@ -114,6 +119,7 @@ public class Controller {
 	 * @param message	message to be displayed	
 	 */
 	private void endMessage(String message) {
+		turnLabel.setText(message);
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Game has ended");
 		alert.setHeaderText(message);
@@ -145,18 +151,6 @@ public class Controller {
 		this.model = new Model();
 		isPlayer1 = true;
 		turnLabel.setText("Player 1's turn");
-	}
-
-	/**
-	 * Performs the necessary actions for the Computer opponent to make a move.
-	 */
-	private void performComputerMove() {
-		int move = model.computerTurn();
-		buttons[move].getStyleClass().add("player2-button");
-		buttons[move].setText(PLAYER_2);
-		model.registerTurn(move, PLAYER_2);
-		turnLabel.setText("Player 1's turn");
-		hasGameEnded(PLAYER_2, move);
 	}
 	
 	/*
