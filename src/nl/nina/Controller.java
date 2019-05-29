@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
@@ -28,6 +29,8 @@ public class Controller {
 
 	@FXML
 	private Button b0, b1, b2, b3, b4, b5, b6, b7, b8;
+	@FXML
+	private Label turnLabel;
 
 	public Controller() {
 		this.model = new Model();
@@ -52,6 +55,7 @@ public class Controller {
 			button.setText(PLAYER_1);
 			model.registerTurn(cell, PLAYER_1);
 			isPlayer1 = false;
+			turnLabel.setText("Player 2's turn");
 			gameEnd = hasGameEnded(PLAYER_1, cell);
 			if (!gameEnd && !pvp) {
 				performComputerMove();
@@ -62,6 +66,7 @@ public class Controller {
 			button.setText(PLAYER_2);
 			model.registerTurn(cell, PLAYER_2);
 			isPlayer1 = true;
+			turnLabel.setText("Player 1's turn");
 			hasGameEnded(PLAYER_2, cell);
 		} 		
 	}
@@ -139,6 +144,7 @@ public class Controller {
 		}
 		this.model = new Model();
 		isPlayer1 = true;
+		turnLabel.setText("Player 1's turn");
 	}
 
 	/**
@@ -149,6 +155,7 @@ public class Controller {
 		buttons[move].getStyleClass().add("player2-button");
 		buttons[move].setText(PLAYER_2);
 		model.registerTurn(move, PLAYER_2);
+		turnLabel.setText("Player 1's turn");
 		hasGameEnded(PLAYER_2, move);
 	}
 	
@@ -157,7 +164,11 @@ public class Controller {
 	 */
 	public void menuClickHandler(ActionEvent e) {
 		MenuItem clickedMenu = (MenuItem) e.getTarget();
-		if (clickedMenu.getText().equals("New game")) {
+		if (clickedMenu.getText().equals("Singleplayer")) {
+			pvp = false;
+			newGame();
+		} else if (clickedMenu.getText().equals("Multiplayer")) {
+			pvp = true;
 			newGame();
 		} else if (clickedMenu.getText().equals("Quit")) {
 			Platform.exit();
@@ -179,7 +190,6 @@ public class Controller {
 		Scene scene = stage.getScene();
 		scene.getStylesheets().remove("Start.css");
 		scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
-		stage.getScene().setRoot(root);
-		
+		stage.getScene().setRoot(root);	
 	}
 }
