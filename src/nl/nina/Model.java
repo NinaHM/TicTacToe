@@ -16,36 +16,32 @@ public class Model {
 	
 	/**
 	 * Registers the move played on the board
-	 * @param cell		the cell which the player chose as his move
-	 * @param XorO		the player who's turn it is
+	 * @param cell 	the cell which the player chose as his move
+	 * @param isPlayer1 	the player who's turn it is
 	 */
-	public void registerTurn(int cell, String XorO) {
-		int value = determinePlayer(XorO);
+	public void registerTurn(int cell, boolean isPlayer1) {
+		int value = determinePlayer(isPlayer1);
 		board[cell % 3][cell / 3] = value;
 	}
 	
 	/**
-	 * Converts the String parameter to an integer, to determine the player
-	 * @param player		"X" or "O"
-	 * @return			an int that determines the player
+	 * Converts the boolean parameter to an integer, to determine the player
+	 * @param isPlayer1		the player who's turn it is	
+	 * @return 		an int that determines the player
 	 */
-	private int determinePlayer(String player) {
-		if(player.equals("X")) {
+	private int determinePlayer(boolean isPlayer1) {
+		if(isPlayer1) {
 			return PLAYER_1;
-		}
-		if(player.equals("O")) {
+		} else {
 			return PLAYER_2;
 		}
-		
-		throw new IllegalArgumentException(
-				"player String must be 'X' or 'O'");
 	}
 	
 	/**
 	 * @see Model#hasPlayerWon(int[][], int, int, int)
 	 */
-	public boolean hasPlayerWon(String XorO, int cell) {	
-		int player = determinePlayer(XorO);
+	public boolean hasPlayerWon(boolean isPlayer1, int cell) {	
+		int player = determinePlayer(isPlayer1);
 		int x = cell % 3;
 		int y = cell / 3;
 		

@@ -37,7 +37,7 @@ public class Controller {
 	}
 
 	/**
-	 * Takes action when one of the nine buttons is pressed.
+	 * Handles the click event when one of the nine buttons is pressed.
 	 */
 	public void buttonClickHandler(ActionEvent e) {
 		Button button = (Button) e.getSource();
@@ -45,25 +45,24 @@ public class Controller {
 		
 		if(button.getText().equals("") && isPlayer1) {
 			performMove(button, cell, PLAYER_1, "player1-button");
-			if (!hasGameEnded(PLAYER_1, cell) && !pvp) {
-				performComputerMove();
-			}
 		} else if(button.getText().equals("") && !isPlayer1 && pvp) {
 			performMove(button, cell, PLAYER_2, "player2-button");
-			hasGameEnded(PLAYER_2, cell);
-		} 		
+		}
 	}
 	
 	private void performMove(Button button, int cell, String player, String css) {
 		button.getStyleClass().add(css);
 		button.setText(player);
-		model.registerTurn(cell, player);
-		if(isPlayer1) {
-			turnLabel.setText("Player 2's turn");
-			isPlayer1 = false;
-		} else {
-			turnLabel.setText("Player 1's turn");
-			isPlayer1 = true;
+		model.registerTurn(cell, isPlayer1);
+		turnLabel.setText((isPlayer1 ? "Player 2" : "Player 1") + "'s turn");
+		
+		if(!hasGameEnded(cell)) {
+			if(isPlayer1 && !pvp) {
+				isPlayer1 = !isPlayer1;
+				performComputerMove();
+			} else {
+				isPlayer1 = !isPlayer1;
+			}
 		}
 	}
 	
@@ -73,7 +72,6 @@ public class Controller {
 	private void performComputerMove() {
 		int move = model.computerTurn();
 		performMove(buttons[move], move, PLAYER_2, "player2-button");
-		hasGameEnded(PLAYER_2, move);
 	}
 
 	/**
@@ -92,16 +90,15 @@ public class Controller {
 
 	/**
 	 * Checks if the game has ended.
-	 * @param player	player who's turn it is
-	 * @param cell		move that was made
-	 * @return 			true if the game has ended
+	 * @param cell 	move that was made
+	 * @return 	true if the game has ended
 	 */
-	private boolean hasGameEnded(String player, int cell) {
-		if (model.hasPlayerWon(player, cell)) {
-			if (player == PLAYER_1) {
+	private boolean hasGameEnded(int cell) {
+		if (model.hasPlayerWon(isPlayer1, cell)) {
+			if (isPlayer1) {
 				endMessage("Player 1 has won the game!");
 				return true;
-			} else if (player == PLAYER_2) {
+			} else {
 				endMessage("Player 2 has won the game!");
 				return true;
 			}
