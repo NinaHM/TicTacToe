@@ -5,7 +5,6 @@
     -fx-border-width: 0 2 2 0;
     -fx-background-insets: 0;
     -fx-font-size: 46.0;
-    -fx-text-fill: red;
 }
 
 .button:hover{
@@ -21,15 +20,9 @@
 }
 
 .player1-button {
-    -fx-focus-color: transparent;
-    -fx-background-insets: -1.0, 0.0, 1.0, 1.0;
-    -fx-font-size: 46.0;
     -fx-text-fill: red; 
 }
 
 .player2-button {
-    -fx-focus-color: transparent;
-    -fx-background-insets: -1.0, 0.0, 1.0, 1.0;
-    -fx-font-size: 46.0;
     -fx-text-fill: blue; 
 }

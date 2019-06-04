@@ -17,7 +17,7 @@ public class Model {
 	/**
 	 * Registers the move played on the board
 	 * @param cell 	the cell which the player chose as his move
-	 * @param isPlayer1 	the player who's turn it is
+	 * @param isPlayer1 	the player who's turn it is (true for player 1)
 	 */
 	public void registerTurn(int cell, boolean isPlayer1) {
 		int value = determinePlayer(isPlayer1);

@@ -38,21 +38,29 @@ public class Controller {
 
 	/**
 	 * Handles the click event when one of the nine buttons is pressed.
+	 * @param e 	the click event that the user performed
 	 */
 	public void buttonClickHandler(ActionEvent e) {
 		Button button = (Button) e.getSource();
-		int cell = findButton(button);
 		
 		if(button.getText().equals("") && isPlayer1) {
-			performMove(button, cell, PLAYER_1, "player1-button");
+			performMove(button, PLAYER_1, "player1-button");
 		} else if(button.getText().equals("") && !isPlayer1 && pvp) {
-			performMove(button, cell, PLAYER_2, "player2-button");
+			performMove(button, PLAYER_2, "player2-button");
 		}
 	}
 	
-	private void performMove(Button button, int cell, String player, String css) {
+	/**
+	 * Performs the necessary actions for a player to make his move.
+	 * @param button	the button that was pressed
+	 * @param player	the String to add to the button
+	 * @param css 		the css class to apply on the button
+	 */
+	private void performMove(Button button, String player, String css) {
+		int cell = findButton(button);
 		button.getStyleClass().add(css);
 		button.setText(player);
+		
 		model.registerTurn(cell, isPlayer1);
 		turnLabel.setText((isPlayer1 ? "Player 2" : "Player 1") + "'s turn");
 		
@@ -71,13 +79,14 @@ public class Controller {
 	 */
 	private void performComputerMove() {
 		int move = model.computerTurn();
-		performMove(buttons[move], move, PLAYER_2, "player2-button");
+		performMove(buttons[move], PLAYER_2, "player2-button");
 	}
 
 	/**
-	 * Searches the array of buttons.
-	 * @param button	the button to search for
-	 * @return			index of the button				
+	 * Searches the array of buttons and returns the 
+	 * index of the button.
+	 * @param button 	the button to search for
+	 * @return 		index of the button				
 	 */
 	private int findButton(Button button) {
 		for (int i = 0; i < buttons.length; i++) {
@@ -89,7 +98,8 @@ public class Controller {
 	}
 
 	/**
-	 * Checks if the game has ended.
+	 * Checks if the game has ended and, if so,
+	 * starts the end message.
 	 * @param cell 	move that was made
 	 * @return 	true if the game has ended
 	 */
@@ -136,22 +146,26 @@ public class Controller {
 		}
 	}
 	
-	/*
-	 * Restarts the game.
+	/**
+	 * Restarts the game with a new blank board.
 	 */
 	private void newGame() {
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i].setText("");
 			buttons[i].setDisable(false);
-			buttons[i].getStyleClass().remove("player2-button");
+			buttons[i].getStyleClass().clear();
+			buttons[i].getStyleClass().add("button");
 		}
 		this.model = new Model();
 		isPlayer1 = true;
 		turnLabel.setText("Player 1's turn");
 	}
 	
-	/*
-	 * Handles the click events from the top menu.
+	/**
+	 * Handles the click events from the top menu bar. It either
+	 * starts a new game of singleplayer or multiplayer or exits 
+	 * the game.
+	 * @param e 	the click event that the user performed
 	 */
 	public void menuClickHandler(ActionEvent e) {
 		MenuItem clickedMenu = (MenuItem) e.getTarget();
@@ -166,7 +180,12 @@ public class Controller {
 		}
 	}
 	
-
+	/**
+	 * Handles click events from the start screen. It starts up the game
+	 * for either singleplayer or multiplayer by changing the fxml and css
+	 * to show the tic tac toe board.
+	 * @param e 	the click event that the user performed
+	 */
 	public void startClickHandler(ActionEvent e) throws IOException {
 		Button button = (Button) e.getSource(); 
 		
@@ -177,10 +196,10 @@ public class Controller {
 		}
 		
 		Stage stage = (Stage) button.getScene().getWindow();
-		Parent root = FXMLLoader.load(getClass().getResource("Layout.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("Game.fxml"));
 		Scene scene = stage.getScene();
 		scene.getStylesheets().remove("Start.css");
-		scene.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("Game.css").toExternalForm());
 		stage.getScene().setRoot(root);	
 	}
 }
