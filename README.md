@@ -9,5 +9,5 @@ In singleplayer mode the user plays against an AI opponent that cannot be defeat
  
 # Screenshots 
 
-![Start screen](/screenshots/StartScreen.png?raw=true)
-![Main screen](/screenshots/MainScreen.png?raw=true)
+![Start screen](https://github.com/ninavdmolen/TicTacToe/raw/master/screenshots/StartScreen.PNG)
+![Main screen](https://github.com/ninavdmolen/TicTacToe/raw/master/screenshots/MainScreen.PNG)
