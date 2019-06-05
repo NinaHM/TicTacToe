@@ -1,0 +1,28 @@
+.button{
+    -fx-focus-color: transparent;
+    -fx-background-color: transparent;
+    -fx-border-color: grey;
+    -fx-border-width: 0 2 2 0;
+    -fx-background-insets: 0;
+    -fx-font-size: 46.0;
+}
+
+.button:hover{
+	-fx-background-color: #D7DBDD;
+}
+
+.label {
+    -fx-focus-color: transparent;
+    -fx-background-insets: -1.0, 0.0, 1.0, 1.0;
+    -fx-font-size: 14.0;
+    -fx-text-fill: black;
+    -fx-font-weight: normal;
+}
+
+.player1-button {
+    -fx-text-fill: red; 
+}
+
+.player2-button {
+    -fx-text-fill: blue; 
+}

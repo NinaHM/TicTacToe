@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.nina.Controller">
+
+	<top>
+		<MenuBar BorderPane.alignment="CENTER">
+			<menus>
+				<Menu text="Game">
+					<items>
+						<MenuItem text="Singleplayer"
+							onAction="#menuClickHandler" />
+						<MenuItem text="Multiplayer" onAction="#menuClickHandler" />
+						<MenuItem text="Quit" onAction="#menuClickHandler" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
+
+	<center>
+		<GridPane BorderPane.alignment="CENTER">
+			<children>
+				<Button fx:id="b0" onAction="#buttonClickHandler"
+					prefHeight="100.0" prefWidth="100.0" />
+				<Button fx:id="b1" onAction="#buttonClickHandler"
+					prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="1" />
+				<Button fx:id="b2" onAction="#buttonClickHandler"
+					prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" />
+				<Button fx:id="b3" onAction="#buttonClickHandler"
+					prefHeight="100.0" prefWidth="100.0" GridPane.rowIndex="1" />
+				<Button fx:id="b4" onAction="#buttonClickHandler"
+					prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="1"
+					GridPane.rowIndex="1" />
+				<Button fx:id="b5" onAction="#buttonClickHandler"
+					prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2"
+					GridPane.rowIndex="1" />
+				<Button fx:id="b6" onAction="#buttonClickHandler"
+					prefHeight="100.0" prefWidth="100.0" GridPane.rowIndex="2" />
+				<Button fx:id="b7" onAction="#buttonClickHandler"
+					prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="1"
+					GridPane.rowIndex="2" />
+				<Button fx:id="b8" onAction="#buttonClickHandler"
+					prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2"
+					GridPane.rowIndex="2" />
+			</children>
+		</GridPane>
+	</center>
+
+	<bottom>
+		<HBox spacing="10" alignment="center">
+			<padding>
+				<Insets bottom="15" />
+			</padding>
+			<Label fx:id="turnLabel" text="Start game: Player 1" style="-fx-font-weight: bold; -fx-text-fill: grey"/>
+		</HBox>
+	</bottom>
+</BorderPane>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.nina.Controller"
+	style="-fx-background-color: black;">
+	
+	<center>
+		<VBox spacing="40" alignment="center">
+			<Label text="Tic Tac Toe" alignment="center" />
+			<VBox spacing="20" alignment="center">
+				<Button text="Singleplayer"
+					onAction="#startClickHandler" />
+				<Button text="Multiplayer"
+					onAction="#startClickHandler" />
+			</VBox>
+		</VBox>
+	</center>
+</BorderPane>
